@@ -19,7 +19,7 @@ const App = () => {
         );
         if (response.data) {
           if (!isInitialLoad)
-            response.data.results.unshift(...paymentsData.results); // not modifying const value, just the array it points to
+            response.data.results.unshift(...paymentsData.results);
           setPaymentsData(response.data);
           if (isInitialLoad) setIsInitialLoad(false);
         }
