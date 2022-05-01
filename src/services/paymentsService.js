@@ -1,9 +1,11 @@
 import axios from "axios";
-import { PAYMENTS_URL } from "../utils/constants";
+import { PAYMENTS_URL, ADDITIONAL_PAYMENTS_URL } from "../utils/constants";
 
-const getAllPayments = async () => {
-  const res = await axios.get(PAYMENTS_URL);
-  return res;
+const getPaymentsData = async (isInitialLoad, nextPageIndex) => {
+  const url = isInitialLoad
+    ? PAYMENTS_URL
+    : `${ADDITIONAL_PAYMENTS_URL}${nextPageIndex}`;
+  return await axios.get(url);
 };
 
-export { getAllPayments };
+export { getPaymentsData };
