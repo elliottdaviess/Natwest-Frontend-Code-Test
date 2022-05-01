@@ -8,20 +8,28 @@ const App = () => {
   const [paymentsData, setPaymentsData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [hasErrorOccured, setHasErrorOccured] = useState(false);
 
   const getPayments = async () => {
     if (isInitialLoad || paymentsData?.metaDatal.hasMoreElements) {
-      const response = await getPaymentsData(
-        isInitialLoad,
-        paymentsData?.metaDatal.nextPageIndex
-      );
-      if (response.data) {
-        if (!isInitialLoad)
-          response.data.results.unshift(...paymentsData.results);
-        setPaymentsData(response.data);
-        if (isInitialLoad) setIsInitialLoad(false);
+      try {
+        const response = await getPaymentsData(
+          isInitialLoad,
+          paymentsData?.metaDatal.nextPageIndex
+        );
+        if (response.data) {
+          if (!isInitialLoad)
+            response.data.results.unshift(...paymentsData.results);
+          setPaymentsData(response.data);
+          if (isInitialLoad) setIsInitialLoad(false);
+        }
+      } catch (e) {
+        console.error(e);
+        setHasErrorOccured(true);
+        setIsLoading(false);
+      } finally {
+        if (isLoading) setIsLoading(false);
       }
-      if (isLoading) setIsLoading(false);
     }
   };
 
@@ -32,10 +40,10 @@ const App = () => {
   return (
     <>
       {isLoading && <h1>Loading...</h1>}
-      {!isLoading && !paymentsData?.results && (
-        <h1>Oops...something went wrong</h1>
+      {hasErrorOccured && (
+        <h1>Oops...something went wrong. Try refreshing the tab.</h1>
       )}
-      {!isLoading && paymentsData.results && (
+      {!isLoading && !hasErrorOccured && paymentsData?.results && (
         <div className='container'>
           <h1>Payment Transactions</h1>
           <PaymentsTable transactions={paymentsData.results}></PaymentsTable>

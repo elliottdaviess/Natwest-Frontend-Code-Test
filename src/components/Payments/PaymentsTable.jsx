@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import getSymbolFromCurrency from "currency-symbol-map";
+import { PENDING_PAYMENT_STATUS } from "../../utils/constants";
 
 const PaymentsTable = (props) => {
   const { transactions } = props;
+  const [isPendingFilterEnabled, setIsPendingFilterEnabled] = useState(false);
 
   const headers = [
     "From",
@@ -31,9 +33,15 @@ const PaymentsTable = (props) => {
   };
 
   const renderTableBody = () => {
+    const transactionsToDisplay = isPendingFilterEnabled
+      ? transactions?.filter(
+          (transaction) => transaction.paymentStatus === PENDING_PAYMENT_STATUS
+        )
+      : transactions;
+
     return (
       <tbody>
-        {transactions?.map((transaction, index) => {
+        {transactionsToDisplay?.map((transaction, index) => {
           return (
             <tr key={index}>
               <td>
@@ -62,6 +70,19 @@ const PaymentsTable = (props) => {
 
   return (
     <>
+      <div className='form-check'>
+        <input
+          className='form-check-input'
+          type='checkbox'
+          value={isPendingFilterEnabled}
+          onChange={function () {
+            setIsPendingFilterEnabled((currentVal) => !currentVal);
+          }}
+        />
+        <label className='form-check-label'>
+          View Pending Transactions Only.
+        </label>
+      </div>
       <table className='table table-bordered table-hover'>
         {renderTableHead()}
         {renderTableBody()}
