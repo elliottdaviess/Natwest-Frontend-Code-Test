@@ -5,7 +5,11 @@ const getPaymentsData = async (isInitialLoad, nextPageIndex) => {
   const url = isInitialLoad
     ? PAYMENTS_URL
     : `${ADDITIONAL_PAYMENTS_URL}${nextPageIndex}`;
-  return await axios.get(url);
+  try {
+    return await axios.get(url);
+  } catch (e) {
+    throw new Error("getPaymentsData failed", e);
+  }
 };
 
 export { getPaymentsData };
