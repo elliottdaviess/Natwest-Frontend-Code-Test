@@ -31,16 +31,16 @@ Installs the projects' dependencies.
 - React functional components.
 - Destructuring props.
 - Dynamic rendering with the `&&` operator.
-- Wrapping the rendered output in a fragment, rather than div tags - satisfies React and avoids rendering an node on the DOM.
+- Wrapping the rendered output in a fragment, rather than div tags - satisfies React and avoids adding an additional node onto the DOM.
 - try-catch blocks.
 - ES6 features (let/const, arrow functions, Async Await etc).
 
 ### Scope for further work
 
-- Props validation and default props with PropTypes.
+- Props validation and default props with `.propTypes` & `.defaultProps`.
 - Unit and component testing with Jest & RTL.
 - Review whether I've been too defensive with nullsafe accessors - some may be redundant/duplicated.
-- Ensure to always use unique keys across the app. Not every array item in the app has a unique id, so I could use an external library like uuidv4 for generating unique ids (see [array].`map` functions in PaymentsTable.jsx).
+- Ensure to always use unique keys across the app. Not every array item in the app has a unique id, so I could've (and should've) used an external library like uuidv4 for generating unique ids (see [array].`map` functions in PaymentsTable.jsx).
 - In app.jsx, the isLoading & isInitialLoad state values are so closely tied that they could likely be combined/consolidated into one value.
 - Split the PaymentTable into 3 seperate components for testability - PaymentsTable, PaymentsTableHeader & PaymentsTableBody.
 
