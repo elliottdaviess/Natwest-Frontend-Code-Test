@@ -49,3 +49,4 @@ Installs the projects' dependencies.
 - Dockerising the application.
 - Implementing a build & test pipeline into the PR process.
 - Environment variables for handling multiple possible API hostnames/endpoints.
+- Configure ESLint to catch linting errors during development.

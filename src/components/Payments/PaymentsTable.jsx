@@ -1,24 +1,25 @@
-import React, { useState } from "react";
-import getSymbolFromCurrency from "currency-symbol-map";
-import { PENDING_PAYMENT_STATUS } from "../../utils/constants";
+/* eslint-disable react/prop-types */
+import React, { useState } from 'react'
+import getSymbolFromCurrency from 'currency-symbol-map'
+import { PENDING_PAYMENT_STATUS } from '../../utils/constants'
 
 const PaymentsTable = (props) => {
-  const { transactions } = props;
-  const [isPendingFilterEnabled, setIsPendingFilterEnabled] = useState(false);
+  const { transactions } = props
+  const [isPendingFilterEnabled, setIsPendingFilterEnabled] = useState(false)
 
   const headers = [
-    "From",
-    "To",
-    "Currency",
-    "Amount",
-    "Type",
-    "Date",
-    "Status",
-  ];
+    'From',
+    'To',
+    'Currency',
+    'Amount',
+    'Type',
+    'Date',
+    'Status'
+  ]
 
   const maskify = (cc) => {
-    return cc.replace(/.(?=.{4})/g, "*");
-  };
+    return cc.replace(/.(?=.{4})/g, '*')
+  }
 
   const renderTableHead = () => {
     return (
@@ -29,15 +30,15 @@ const PaymentsTable = (props) => {
           ))}
         </tr>
       </thead>
-    );
-  };
+    )
+  }
 
   const renderTableBody = () => {
     const transactionsToDisplay = isPendingFilterEnabled
       ? transactions?.filter(
-          (transaction) => transaction.paymentStatus === PENDING_PAYMENT_STATUS
-        )
-      : transactions;
+        (transaction) => transaction.paymentStatus === PENDING_PAYMENT_STATUS
+      )
+      : transactions
 
     return (
       <tbody>
@@ -62,11 +63,11 @@ const PaymentsTable = (props) => {
               <td>{transaction.paymentDate}</td>
               <td>{transaction.paymentStatus}</td>
             </tr>
-          );
+          )
         })}
       </tbody>
-    );
-  };
+    )
+  }
 
   return (
     <>
@@ -76,7 +77,7 @@ const PaymentsTable = (props) => {
           type='checkbox'
           value={isPendingFilterEnabled}
           onChange={function () {
-            setIsPendingFilterEnabled((currentVal) => !currentVal);
+            setIsPendingFilterEnabled((currentVal) => !currentVal)
           }}
         />
         <label className='form-check-label'>
@@ -88,7 +89,7 @@ const PaymentsTable = (props) => {
         {renderTableBody()}
       </table>
     </>
-  );
-};
+  )
+}
 
-export default PaymentsTable;
+export default PaymentsTable

@@ -1,19 +1,19 @@
-const path = require("path");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const path = require('path')
+const HtmlWebPackPlugin = require('html-webpack-plugin')
 module.exports = {
-  mode: "development",
-  devtool: "inline-source-map",
-  entry: "/src/index.js",
+  mode: 'development',
+  devtool: 'inline-source-map',
+  entry: '/src/index.js',
   resolve: {
-    extensions: [".js", ".jsx", ".scss"],
+    extensions: ['.js', '.jsx', '.scss']
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, 'dist')
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "src/index.html",
-    }),
+      template: 'src/index.html'
+    })
   ],
   module: {
     rules: [
@@ -21,30 +21,30 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
             presets: [
               [
-                "@babel/preset-env",
+                '@babel/preset-env',
                 {
-                  useBuiltIns: "usage",
-                  corejs: 3,
-                },
+                  useBuiltIns: 'usage',
+                  corejs: 3
+                }
               ],
-              "@babel/preset-react",
-            ],
-          },
-        },
+              '@babel/preset-react'
+            ]
+          }
+        }
       },
       {
         test: /\.(css|scss)$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
-      },
-    ],
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      }
+    ]
   },
   devServer: {
-    contentBase: path.join(__dirname, "dist"),
+    contentBase: path.join(__dirname, 'dist'),
     compress: true,
-    port: 9000,
-  },
-};
+    port: 9000
+  }
+}

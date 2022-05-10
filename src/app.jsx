@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { getPaymentsData } from "./services/paymentsService";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./app.scss";
-import PaymentsTable from "./components/Payments/PaymentsTable";
+import React, { useEffect, useState } from 'react'
+import { getPaymentsData } from './services/paymentsService'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './app.scss'
+import PaymentsTable from './components/Payments/PaymentsTable'
 
 const App = () => {
-  const [paymentsData, setPaymentsData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const [hasErrorOccured, setHasErrorOccured] = useState(false);
+  const [paymentsData, setPaymentsData] = useState()
+  const [isLoading, setIsLoading] = useState(true)
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
+  const [hasErrorOccured, setHasErrorOccured] = useState(false)
 
   const getPayments = async () => {
     if (isInitialLoad || paymentsData?.metaDatal.hasMoreElements) {
@@ -16,26 +16,27 @@ const App = () => {
         const response = await getPaymentsData(
           isInitialLoad,
           paymentsData?.metaDatal.nextPageIndex
-        );
+        )
         if (response.data) {
-          if (!isInitialLoad)
-            response.data.results.unshift(...paymentsData.results);
-          setPaymentsData(response.data);
-          if (isInitialLoad) setIsInitialLoad(false);
+          if (!isInitialLoad) {
+            response.data.results.unshift(...paymentsData.results)
+          }
+          setPaymentsData(response.data)
+          if (isInitialLoad) setIsInitialLoad(false)
         }
       } catch (e) {
-        console.error(e);
-        setHasErrorOccured(true);
-        setIsLoading(false);
+        console.error(e)
+        setHasErrorOccured(true)
+        setIsLoading(false) // don't need this
       } finally {
-        if (isLoading) setIsLoading(false);
+        if (isLoading) setIsLoading(false)
       }
     }
-  };
+  }
 
   useEffect(() => {
-    getPayments();
-  }, []);
+    getPayments()
+  }, [])
 
   return (
     <>
@@ -49,16 +50,14 @@ const App = () => {
           <PaymentsTable transactions={paymentsData.results}></PaymentsTable>
           <button
             className='btn btn-primary btn-lg btn-block'
-            onClick={function () {
-              getPayments();
-            }}
+            onClick={() => { getPayments() }}
           >
             Load More
           </button>
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App
